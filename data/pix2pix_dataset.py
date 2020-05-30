@@ -65,9 +65,9 @@ class Pix2pixDataset(BaseDataset):
 
         # input image (real images)
         image_path = self.image_paths[index]
-        assert self.paths_match(label_path, image_path), \
-            "The label_path %s and image_path %s don't match." % \
-            (label_path, image_path)
+        # assert self.paths_match(label_path, image_path), \
+        #     "The label_path %s and image_path %s don't match." % \
+        #     (label_path, image_path)
         image = Image.open(image_path)
         image = image.convert('RGB')
 
