@@ -268,8 +268,6 @@ class Ex(QWidget, Ui_Form):
                       'path': image_path,
                       }
 
-
-
         return input_dict
 
 
@@ -329,8 +327,6 @@ class Ex(QWidget, Ui_Form):
 
         self.run_deep_model()
         self.update_snapshots()
-
-
 
 
     def load_input_feature(self):

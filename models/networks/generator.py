@@ -72,14 +72,18 @@ class SPADEGenerator(BaseNetwork):
 
         return sw, sh
 
-    def forward(self, input, rgb_img, obj_dic=None):
+    def get_z_style(self,rgb_img, seg):
+        return self.Zencoder(input=rgb_img, segmap=seg)
+
+    def forward(self, input, rgb_img=None, obj_dic=None, style_codes=None):
+
         seg = input
 
         x = F.interpolate(seg, size=(self.sh, self.sw))
         x = self.fc(x)
 
-        style_codes = self.Zencoder(input=rgb_img, segmap=seg)
-
+        if style_codes is None:
+            style_codes = self.Zencoder(input=rgb_img, segmap=seg)
 
         x = self.head_0(x, seg, style_codes, obj_dic=obj_dic)
 

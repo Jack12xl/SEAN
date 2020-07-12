@@ -146,7 +146,6 @@ class ACE(nn.Module):
                                 middle_avg[i].masked_scatter_(segmap.bool()[i, j], component_mu)
 
             else:
-
                 for i in range(b_size):
                     for j in range(segmap.shape[1]):
                         component_mask_area = torch.sum(segmap.bool()[i, j])

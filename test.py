@@ -29,10 +29,38 @@ webpage = html.HTML(web_dir,
                     'Experiment = %s, Phase = %s, Epoch = %s' %
                     (opt.name, opt.phase, opt.which_epoch))
 
+obj_dic = None
+
+################# Try mean code ######################
+
+# from glob import glob
+# import numpy as np
+# import torch
+
+# average_style_code_folder = 'styles_test/mean_style_code/mean/'
+# obj_dic = {}
+
+# for i in range(19):
+#     obj_dic[str(i)] = {}
+
+#     average_category_folder_list = glob(os.path.join(average_style_code_folder, str(i), '*.npy'))
+#     average_category_list = [os.path.splitext(os.path.basename(name))[0] for name in
+#                                 average_category_folder_list]
+
+#     for style_code_path in average_category_list:
+#             obj_dic[str(i)][style_code_path] = torch.from_numpy(
+#                 np.load(os.path.join(average_style_code_folder, str(i), style_code_path + '.npy'))).cuda()
+                
+######################################################
+
 # test
 for i, data_i in enumerate(dataloader):
     if i * opt.batchSize >= opt.how_many:
         break
+
+    if obj_dic is not None:
+        print('Load obj_dic')
+        data_i['obj_dic'] = obj_dic
 
     generated = model(data_i, mode='inference')
 

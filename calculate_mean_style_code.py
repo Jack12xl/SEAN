@@ -14,13 +14,21 @@ layers_list = ['ACE.npy']
 style_list = []
 
 
-for cat_i in range(19):
+for cat_i in range(13, 19):
     for layer_j in layers_list:
         tmp_list = glob('styles_test/style_codes/*/' + str(cat_i) + '/' + layer_j)
+
+        print('%02d: got %d style codes for %s'%(cat_i, len(tmp_list), layer_j))
+
         style_list = []
 
         for k in tmp_list:
-            style_list.append(np.load(k))
+            try:
+                style_data = np.load(k)
+                style_list.append(style_data)
+            except Exception as e:
+                print(e)
+                continue
 
         if len(style_list) > 0:
             result = np.array(style_list).mean(0)
