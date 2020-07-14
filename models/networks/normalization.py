@@ -76,7 +76,7 @@ class ACE(nn.Module):
 
         self.ACE_Name = ACE_Name
         self.status = status
-        self.save_npy = True
+        self.save_npy = False
         self.Spade = SPADE(*spade_params)
         self.use_rgb = use_rgb
         self.style_length = 512
@@ -146,6 +146,7 @@ class ACE(nn.Module):
                                 middle_avg[i].masked_scatter_(segmap.bool()[i, j], component_mu)
 
             else:
+
                 for i in range(b_size):
                     for j in range(segmap.shape[1]):
                         component_mask_area = torch.sum(segmap.bool()[i, j])
@@ -155,14 +156,12 @@ class ACE(nn.Module):
 
                             middle_mu = F.relu(self.__getattr__('fc_mu' + str(j))(style_codes[i][j]))
                             component_mu = middle_mu.reshape(self.style_length, 1).expand(self.style_length, component_mask_area)
-
                             middle_avg[i].masked_scatter_(segmap.bool()[i, j], component_mu)
 
 
                             if self.status == 'test' and self.save_npy and self.ACE_Name=='up_2_ACE_0':
                                 tmp = style_codes[i][j].cpu().numpy()
                                 dir_path = 'styles_test'
-
                                 ############### some problem with obj_dic[i]
 
                                 im_name = os.path.basename(obj_dic[i])
@@ -224,7 +223,7 @@ class ACE(nn.Module):
         self.fc_mu16 = nn.Linear(style_length, style_length)
         self.fc_mu17 = nn.Linear(style_length, style_length)
         self.fc_mu18 = nn.Linear(style_length, style_length)
-
+        self.fc_mu19 = nn.Linear(style_length, style_length)
 
 
 

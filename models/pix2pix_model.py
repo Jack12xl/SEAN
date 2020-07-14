@@ -54,14 +54,8 @@ class Pix2PixModel(torch.nn.Module):
         elif mode == 'inference':
             with torch.no_grad():
                 # fake_image, _ = self.generate_fake(input_semantics, real_image)
-
-                if 'obj_dic' in data:
-                    print('Use obj_dic.')
-                    obj_dic = data['obj_dic']
-                else:
-                    obj_dic = data['path']
+                obj_dic = data['path']
                 fake_image = self.save_style_codes(input_semantics, real_image, obj_dic)
-
             return fake_image
         elif mode == 'UI_mode':
             with torch.no_grad():
